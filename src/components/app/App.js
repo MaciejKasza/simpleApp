@@ -14,10 +14,15 @@ import RegisterPage from "../../pages/registerPage/RegisterPage";
 import { AuthProvider } from "../../contexts/AuthContext";
 import ProtectedRoutes from "../../routes/ProtectedRoute";
 import PageNotFound from "../../pages/notFoundPage/PageNotFound";
+import Products from "../products/Products";
+import Settings from "../settings/Settings";
+import Users from "../users/Users";
 
 //Theme i Global Styles
 const LightTheme = {
+  name: "light",
   pageBacground: "#E5E5E5",
+  pageBacgroundSecondary: "#093545",
   secondaryColor: "#20DF7F",
   primaryColor: "#224957",
   textColor: "#224957",
@@ -26,7 +31,9 @@ const LightTheme = {
 };
 
 const DarkTheme = {
+  name: "dark",
   pageBacground: "#093545",
+  pageBacgroundSecondary: "#E5E5E5",
   secondaryColor: "#20DF7F",
   primaryColor: "#224957",
   textColor: "#FFFFFF",
@@ -69,7 +76,22 @@ const App = (props) => {
           <Routes>
             {/* Routes for login users */}
             <Route element={<ProtectedRoutes />}>
-              <Route path="/" element={<HomePage />} exact />
+              <Route path="/" element={<HomePage content="dasboard" />} exact />
+              <Route
+                path="/users"
+                element={<HomePage content="users" />}
+                exact
+              />
+              <Route
+                path="/settings"
+                element={<HomePage content="settings" />}
+                exact
+              />
+              <Route
+                path="/products"
+                element={<HomePage content="products" />}
+                exact
+              />
             </Route>
             {/* Routes for non login users */}
             <Route path="/login" element={<LoginPage />} />

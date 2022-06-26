@@ -10,7 +10,6 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState("");
 
   useEffect(() => {
-    console.log("1");
     const localStorageToken = localStorage.getItem("token");
     if (
       localStorageToken &&
@@ -23,7 +22,6 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    console.log("2");
     //Jeżli token się zmieni to pobieramy dane o zalogowanym userze
     if (token) {
       localStorage.setItem("token", token);
