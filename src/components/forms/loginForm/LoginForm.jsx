@@ -1,19 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //Style
 import { StyledLoginFormContainer } from "./LoginForm.style";
 
 //Context
+import { useAuth } from "../../../contexts/AuthContext";
 
 const LoginForm = (props) => {
+  const { token, authorizeUser } = useAuth();
+  const navigate = useNavigate();
+
   const initialFormValues = { email: "", password: "" };
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formError, setFormError] = useState("");
 
   const validateData = (email, password) => {
     if (email && password) return { ok: true, msg: "" };
-    else return { ok: false, msg: "Brak maila lub hasła" };
+    else return { ok: false, msg: "Wszystkie pola muszą być uzupełnione" };
   };
 
   const handleChange = (e) => {
@@ -31,6 +35,14 @@ const LoginForm = (props) => {
     const isValid = validateData(email, password);
     if (isValid.ok) {
       //Zapytanie do API o poprawność danych
+
+      //Jak jest ok z danymi z api to trzeba zautoryzowac usera podając token
+      const authStatus = authorizeUser(email);
+      if (authStatus.ok) {
+        navigate("/");
+      } else {
+        console.error("Token poroblem: ", authStatus);
+      }
     } else {
       setFormError(isValid.msg);
     }

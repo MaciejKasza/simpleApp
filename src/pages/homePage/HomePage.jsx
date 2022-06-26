@@ -1,9 +1,11 @@
 import React from "react";
 import {} from "./HomePage.styled";
+import { useAuth } from "../../contexts/AuthContext";
 
 const HomePage = (props) => {
+  const { logout } = useAuth();
   const handleLogut = () => {
-    console.log("logout");
+    logout();
   };
 
   return (

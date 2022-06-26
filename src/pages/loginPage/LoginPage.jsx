@@ -1,12 +1,28 @@
 import React from "react";
-import { StyledLoginPage } from "./LoginPage.styled";
+import { Navigate } from "react-router-dom";
+
+//Context
+import { useAuth } from "../../contexts/AuthContext";
+
+//Components
 import LoginForm from "../../components/forms/loginForm/LoginForm";
 
+//Style
+import { StyledLoginPage } from "./LoginPage.styled";
+
 const LoginPage = (props) => {
+  const { token } = useAuth();
+
   return (
-    <StyledLoginPage>
-      <LoginForm />
-    </StyledLoginPage>
+    <>
+      {!token ? (
+        <StyledLoginPage>
+          <LoginForm />
+        </StyledLoginPage>
+      ) : (
+        <Navigate to="/" />
+      )}
+    </>
   );
 };
 

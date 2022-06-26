@@ -1,12 +1,27 @@
 import React from "react";
-import { StyledRegisterPage } from "./RegisterPage.styled";
+import { Navigate } from "react-router-dom";
+
+// Context
+import { useAuth } from "../../contexts/AuthContext";
+
+// Components
 import RegisterForm from "../../components/forms/registerForm/RegisterForm";
 
+// Style
+import { StyledRegisterPage } from "./RegisterPage.styled";
+
 const RegisterPage = (props) => {
+  const { token } = useAuth();
   return (
-    <StyledRegisterPage>
-      <RegisterForm />
-    </StyledRegisterPage>
+    <>
+      {!token ? (
+        <StyledRegisterPage>
+          <RegisterForm />
+        </StyledRegisterPage>
+      ) : (
+        <Navigate to="/" />
+      )}
+    </>
   );
 };
 

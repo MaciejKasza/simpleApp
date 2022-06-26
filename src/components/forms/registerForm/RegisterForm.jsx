@@ -1,12 +1,16 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //Style
 import { StyledRegisterFormContainer } from "./RegisterForm.style";
 
 //Context
+import { useAuth } from "../../../contexts/AuthContext";
 
 const RegisterForm = (props) => {
+  const { authorizeUser } = useAuth();
+  const navigate = useNavigate();
+
   const initialFormValues = { email: "", password: "", passwordCheck: "" };
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formError, setFormError] = useState("");
@@ -15,7 +19,7 @@ const RegisterForm = (props) => {
     if (email && password && passwordCheck) {
       if (password === passwordCheck) return { ok: true, msg: "" };
       else return { ok: false, msg: "Podane hasło są różne" };
-    } else return { ok: false, msg: "Brak maila lub hasła" };
+    } else return { ok: false, msg: "Wszystkie pola muszą być uzupełnione" };
   };
 
   const handleChange = (e) => {
@@ -34,6 +38,14 @@ const RegisterForm = (props) => {
     console.log(isValid);
     if (isValid.ok) {
       //Zapytanie do API o poprawność danych
+
+      //Jak jest ok z danymi z api to trzeba zalogować usera podając token
+      const authStatus = authorizeUser(email);
+      if (authStatus.ok) {
+        navigate("/");
+      } else {
+        console.error("Token poroblem: ", authStatus);
+      }
     } else {
       setFormError(isValid.msg);
     }

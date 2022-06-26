@@ -11,6 +11,9 @@ import ThemeIcon from "../themeIcon/ThemeIcon";
 import HomePage from "../../pages/homePage/HomePage";
 import LoginPage from "../../pages/loginPage/LoginPage";
 import RegisterPage from "../../pages/registerPage/RegisterPage";
+import { AuthProvider } from "../../contexts/AuthContext";
+import ProtectedRoutes from "../../routes/ProtectedRoute";
+import PageNotFound from "../../pages/notFoundPage/PageNotFound";
 
 //Theme i Global Styles
 const LightTheme = {
@@ -59,18 +62,26 @@ const App = (props) => {
   const [theme, setTheme] = useState("light");
 
   return (
-    <Router>
-      <ThemeProvider theme={themes[theme]}>
-        <GlobalStyle />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-        </Routes>
-        <Wave />
-        <ThemeIcon theme={theme} setTheme={setTheme} />
-      </ThemeProvider>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <ThemeProvider theme={themes[theme]}>
+          <GlobalStyle />
+          <Routes>
+            {/* Routes for login users */}
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/" element={<HomePage />} exact />
+            </Route>
+            {/* Routes for non login users */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            {/* Not defined routes */}
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+          <Wave />
+          <ThemeIcon theme={theme} setTheme={setTheme} />
+        </ThemeProvider>
+      </Router>
+    </AuthProvider>
   );
 };
 
