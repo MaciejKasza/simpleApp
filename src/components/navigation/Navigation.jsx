@@ -1,6 +1,6 @@
 import React from "react";
 import { FcTodoList } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   FaHome,
   FaUsers,
@@ -24,33 +24,33 @@ const Navigation = (props) => {
       </Link>
       <ul>
         <li className="">
-          <Link to="/">
+          <NavLink to="/">
             <FaHome />
-            Dasboard
-          </Link>
+            <span>Dasboard</span>
+          </NavLink>
         </li>
         <li className="">
-          <Link to="/users">
+          <NavLink to="/users">
             <FaUsers />
-            Użytkownicy
-          </Link>
+            <span>Użytkownicy</span>
+          </NavLink>
         </li>
         <li className="">
-          <Link to="/products">
+          <NavLink to="/products">
             <FaList />
-            Produkty
-          </Link>
+            <span>Produkty</span>
+          </NavLink>
         </li>
         <li className="">
-          <Link to="/settings">
+          <NavLink to="/settings">
             <FaUserEdit />
-            Ustawienia
-          </Link>
+            <span>Ustawienia</span>
+          </NavLink>
         </li>
         <li className="">
           <Link to="" onClick={logout}>
             <FaSignOutAlt />
-            Wyloguj
+            <span>Wyloguj</span>
           </Link>
         </li>
       </ul>

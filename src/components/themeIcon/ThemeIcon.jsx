@@ -25,7 +25,7 @@ const Icon = styled.div`
   height: 70px;
   position: fixed;
   bottom: 35px;
-  left: 35px;
+  left: 90px;
   border-radius: 50%;
   z-index: 999;
 
@@ -48,5 +48,19 @@ const Icon = styled.div`
       height: 100%;
       transform: translateX(-50%);
     }
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 35px;
+    height: 35px;
+
+    div {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #000;
+    }
+
+    bottom: 35px;
+    left: 12.5px;
   }
 `;
